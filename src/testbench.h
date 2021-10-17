@@ -54,6 +54,8 @@ long measure(unsigned nthreads, unsigned ncount, unsigned repeat) {
 template <typename Lock>
 void experiment(std::string csv_fname,
                 std::vector<std::tuple<unsigned, unsigned, unsigned>> setups) {
+  std::cout << "benchmark: " << csv_fname << "\n";
+
   std::ofstream csv(csv_fname);
   csv << "threads, ncount, repeat, time\n";
 
@@ -65,6 +67,7 @@ void experiment(std::string csv_fname,
               << "; time: " << time << " us\n";
     csv << nthread << ", " << ncount << ", " << repeat << ", " << time << "\n";
   }
+  std::cout << "\n";
 }
 
 #endif
