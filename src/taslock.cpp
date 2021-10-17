@@ -20,11 +20,13 @@ private:
 };
 
 int main(int, char *[]) {
-  experiment<taslock_t>("taslock.csv", {{1, 1000, 25},
-                                        {2, 1000, 25},
-                                        {4, 1000, 25},
-                                        {16, 1000, 25},
-                                        {32, 1000, 25},
-                                        {64, 1000, 25},
-                                        {128, 1000, 25}});
+  constexpr unsigned NCOUNT = 50000;
+  constexpr unsigned REPEAT = 25;
+  experiment<taslock_t>("taslock.csv", {{1, NCOUNT, REPEAT},
+                                        {2, NCOUNT, REPEAT},
+                                        {4, NCOUNT, REPEAT},
+                                        {8, NCOUNT, REPEAT},
+                                        {16, NCOUNT, REPEAT},
+                                        {32, NCOUNT, REPEAT},
+                                        {64, NCOUNT, REPEAT}});
 }
