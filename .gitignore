@@ -33,3 +33,6 @@
 
 # Run results
 *.csv
+
+# VSCode
+.vscode/
