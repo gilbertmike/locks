@@ -1,6 +1,7 @@
 #include <array>
 #include <atomic>
 #include <iostream>
+#include <thread>
 
 #include "testbench.h"
 
@@ -9,8 +10,9 @@ public:
   taslock_t() : l(false) {}
 
   void lock() {
-    while (l.exchange(true))
-      ;
+    while (l.exchange(true)) {
+      std::this_thread::yield();
+    }
   }
 
   void unlock() { l.store(false); }
@@ -22,11 +24,11 @@ private:
 int main(int, char *[]) {
   constexpr unsigned NCOUNT = 50000;
   constexpr unsigned REPEAT = 25;
-  experiment<taslock_t>("taslock.csv", {{1, NCOUNT, REPEAT},
-                                        {2, NCOUNT, REPEAT},
-                                        {4, NCOUNT, REPEAT},
-                                        {8, NCOUNT, REPEAT},
-                                        {16, NCOUNT, REPEAT},
-                                        {32, NCOUNT, REPEAT},
-                                        {64, NCOUNT, REPEAT}});
+  experiment<taslock_t>("csvs/taslock.csv", {{1, NCOUNT, REPEAT},
+                                             {2, NCOUNT, REPEAT},
+                                             {4, NCOUNT, REPEAT},
+                                             {8, NCOUNT, REPEAT},
+                                             {16, NCOUNT, REPEAT},
+                                             {32, NCOUNT, REPEAT},
+                                             {64, NCOUNT, REPEAT}});
 }
